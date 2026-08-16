@@ -37,6 +37,7 @@
       "cursor"
       "discord"
       "fantastical"
+      "fuse-t"
       "ghostty"
       "google-chrome"
       "grok-bot"
@@ -53,12 +54,13 @@
       "slack"
       "spotify"
       "tailscale-app"
+      "veracrypt-fuse-t"
       "wispr-flow"
-
     ];
 
     brews = [
       "gnupg"
+      "pinentry-mac"
     ];
   };
 

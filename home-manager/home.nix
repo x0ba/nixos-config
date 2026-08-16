@@ -4,6 +4,8 @@
   ...
 }:
 let
+  signingKey = "8BE6AC395444462A";
+
   shellAliases = {
     ga = "git add";
     gc = "git commit";
@@ -103,11 +105,23 @@ in
 
   programs.git = {
     enable = true;
+    signing = {
+      key = signingKey;
+      format = "openpgp";
+      signByDefault = true;
+    };
     settings = {
       user.name = "Daniel Xu";
       user.email = "hi@danielx.me";
+      color.ui = true;
+      github.user = "x0ba";
       push.default = "tracking";
       init.defaultBranch = "main";
+      aliases = {
+        cleanup = "!git branch --merged | grep  -v '\\*\\|master\\|develop' | xargs -n 1 -r git branch -d";
+        prettylog = "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(r) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative";
+        root = "rev-parse --show-toplevel";
+      };
     };
   };
 
@@ -119,6 +133,11 @@ in
         email = config.programs.git.settings.user.email;
       };
       ui.default-command = "status";
+      signing = {
+        behavior = "own";
+        backend = "gpg";
+        key = signingKey;
+      };
     };
   };
 
