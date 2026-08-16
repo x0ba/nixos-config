@@ -67,6 +67,11 @@ in
       codex
       opencode
     ];
+
+    file.".config/herdr/config.toml".text = ''
+      [keys]
+      prefix = "ctrl+a"
+    '';
   };
 
   programs.home-manager.enable = true;
