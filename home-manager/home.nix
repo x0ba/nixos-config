@@ -178,9 +178,6 @@ in
       editor.keymap = "emacs";
       prompt.theme = "sorin";
     };
-    envExtra = ''
-      [[ -s "$HOME/.vite-plus/env" ]] && . "$HOME/.vite-plus/env"
-    '';
   };
 
   programs.fish = {
