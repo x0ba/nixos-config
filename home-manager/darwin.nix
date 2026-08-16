@@ -1,6 +1,11 @@
-{ ... }:
+{ pkgs, ... }:
 {
   home.homeDirectory = "/Users/daniel";
+
+  services.gpg-agent = {
+    enable = true;
+    pinentry.package = pkgs.pinentry_mac;
+  };
 
   programs.ghostty = {
     enable = true;

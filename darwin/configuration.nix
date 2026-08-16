@@ -57,11 +57,6 @@
       "veracrypt-fuse-t"
       "wispr-flow"
     ];
-
-    brews = [
-      "gnupg"
-      "pinentry-mac"
-    ];
   };
 
   fonts.packages = [

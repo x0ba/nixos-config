@@ -36,8 +36,4 @@ function __bobthefish_prompt_nix -S -d 'Display current nix environment'
     set_color normal
 end
 
-if isatty
-    set -x GPG_TTY (tty)
-end
-
 alias fnix "nix-shell --run fish"

@@ -74,6 +74,8 @@ in
 
   programs.home-manager.enable = true;
 
+  programs.gpg.enable = true;
+
   programs.nh = {
     enable = true;
     flake = "${config.home.homeDirectory}/Code/p/nix-config";
