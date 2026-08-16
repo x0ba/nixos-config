@@ -36,7 +36,7 @@
       "balenaetcher"
       "cursor"
       "discord"
-      "fantastical"
+      "notion-calendar"
       "fuse-t"
       "ghostty"
       "google-chrome"
