@@ -1,13 +1,9 @@
 {
-  inputs,
-  lib,
   config,
   pkgs,
   ...
 }:
 let
-
-  isDarwin = pkgs.stdenv.hostPlatform.isDarwin;
   shellAliases = {
     ga = "git add";
     gc = "git commit";
@@ -36,11 +32,11 @@ let
 in
 {
   imports = [
+    ../modules/home-manager
   ];
 
   home = {
     username = "daniel";
-    homeDirectory = if isDarwin then "/Users/daniel" else "/home/daniel";
 
     sessionPath = [
       "${config.home.homeDirectory}/.local/bin"
@@ -131,19 +127,6 @@ in
     nix-direnv.enable = true;
   };
 
-  programs.ghostty = lib.mkIf isDarwin {
-    enable = true;
-    # Homebrew cask owns the app; this module only writes config + shell hooks.
-    package = null;
-    systemd.enable = false;
-    enableFishIntegration = true;
-    enableZshIntegration = true;
-    enableBashIntegration = false;
-    settings = {
-      shell-integration-features = true;
-    };
-  };
-
   programs.zsh = {
     enable = true;
     # Lock the current location; HM will default to XDG after stateVersion 26.05.
@@ -172,43 +155,31 @@ in
     envExtra = ''
       [[ -s "$HOME/.vite-plus/env" ]] && . "$HOME/.vite-plus/env"
     '';
-    profileExtra = lib.optionalString isDarwin ''
-      if [[ -d /opt/homebrew ]]; then
-        eval "$(/opt/homebrew/bin/brew shellenv zsh)"
-      fi
-    '';
   };
 
   programs.fish = {
     enable = true;
     shellAliases = shellAliases;
     functions.fish_greeting = "";
-    shellInit = lib.optionalString isDarwin ''
-      if test -d /opt/homebrew
-        eval (/opt/homebrew/bin/brew shellenv fish)
-      end
+    interactiveShellInit = ''
+      ${builtins.readFile ./config.fish}
+      set -g SHELL ${pkgs.fish}/bin/fish
     '';
-    interactiveShellInit = lib.strings.concatStrings (
-      lib.strings.intersperse "\n" ([
-        "source ${inputs.theme-bobthefish}/functions/fish_prompt.fish"
-        "source ${inputs.theme-bobthefish}/functions/fish_right_prompt.fish"
-        "source ${inputs.theme-bobthefish}/functions/fish_title.fish"
-        (builtins.readFile ./config.fish)
-        "set -g SHELL ${pkgs.fish}/bin/fish"
-      ])
-    );
 
-    plugins =
-      map
-        (n: {
-          name = n;
-          src = inputs.${n};
-        })
-        [
-          "fish-fzf"
-          "fish-foreign-env"
-          "theme-bobthefish"
-        ];
+    plugins = with pkgs.fishPlugins; [
+      {
+        name = "fzf";
+        src = fzf.src;
+      }
+      {
+        name = "foreign-env";
+        src = foreign-env.src;
+      }
+      {
+        name = "bobthefish";
+        src = bobthefish.src;
+      }
+    ];
   };
 
   programs.atuin.enable = true;

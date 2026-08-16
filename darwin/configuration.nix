@@ -1,25 +1,15 @@
 {
   inputs,
-  lib,
-  config,
   pkgs,
   ...
 }:
 {
-  imports = [
-  ];
-
   nixpkgs = {
-    overlays = [
-      inputs.self.overlays.additions
-      inputs.self.overlays.modifications
-      inputs.self.overlays.stable-packages
-    ];
-    config = {
-      allowUnfree = true;
-    };
+    config.allowUnfree = true;
     hostPlatform = "aarch64-darwin";
   };
+
+  security.pam.services.sudo_local.touchIdAuth = true;
 
   # Determinate Nix already manages the Nix installation and daemon.
   # Letting nix-darwin take that over would fight /etc/nix/nix.conf.
@@ -40,6 +30,7 @@
 
   homebrew = {
     enable = true;
+    onActivation.cleanup = "uninstall";
     casks = [
       "1password"
       "balenaetcher"

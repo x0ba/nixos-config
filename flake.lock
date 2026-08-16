@@ -1,39 +1,5 @@
 {
   "nodes": {
-    "fish-foreign-env": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1547655379,
-        "narHash": "sha256-er1KI2xSUtTlQd9jZl1AjqeArrfBxrgBLcw5OqinuAM=",
-        "owner": "oh-my-fish",
-        "repo": "plugin-foreign-env",
-        "rev": "dddd9213272a0ab848d474d0cbde12ad034e65bc",
-        "type": "github"
-      },
-      "original": {
-        "owner": "oh-my-fish",
-        "repo": "plugin-foreign-env",
-        "rev": "dddd9213272a0ab848d474d0cbde12ad034e65bc",
-        "type": "github"
-      }
-    },
-    "fish-fzf": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1590308198,
-        "narHash": "sha256-QyCkksUYELC+TJDZS1C8aL5MBLmDcwM8gMsfkO0p4E8=",
-        "owner": "jethrokuan",
-        "repo": "fzf",
-        "rev": "24f4739fc1dffafcc0da3ccfbbd14d9c7d31827a",
-        "type": "github"
-      },
-      "original": {
-        "owner": "jethrokuan",
-        "repo": "fzf",
-        "rev": "24f4739fc1dffafcc0da3ccfbbd14d9c7d31827a",
-        "type": "github"
-      }
-    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -74,22 +40,6 @@
         "type": "github"
       }
     },
-    "nixpkgs": {
-      "locked": {
-        "lastModified": 1782847189,
-        "narHash": "sha256-twXPFqFsrrY5r28Zh7Homgcp2gUMBgQ6WDS98Q/3xFI=",
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "b6018f87da91d19d0ab4cf979885689b469cdd41",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nixos",
-        "ref": "nixos-25.11",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
     "nixpkgs-unstable": {
       "locked": {
         "lastModified": 1786599213,
@@ -108,30 +58,9 @@
     },
     "root": {
       "inputs": {
-        "fish-foreign-env": "fish-foreign-env",
-        "fish-fzf": "fish-fzf",
         "home-manager": "home-manager",
         "nix-darwin": "nix-darwin",
-        "nixpkgs": "nixpkgs",
-        "nixpkgs-unstable": "nixpkgs-unstable",
-        "theme-bobthefish": "theme-bobthefish"
-      }
-    },
-    "theme-bobthefish": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1727184317,
-        "narHash": "sha256-cXOYvdn74H4rkMWSC7G6bT4wa9d3/3vRnKed2ixRnuA=",
-        "owner": "oh-my-fish",
-        "repo": "theme-bobthefish",
-        "rev": "e3b4d4eafc23516e35f162686f08a42edf844e40",
-        "type": "github"
-      },
-      "original": {
-        "owner": "oh-my-fish",
-        "repo": "theme-bobthefish",
-        "rev": "e3b4d4eafc23516e35f162686f08a42edf844e40",
-        "type": "github"
+        "nixpkgs-unstable": "nixpkgs-unstable"
       }
     }
   },

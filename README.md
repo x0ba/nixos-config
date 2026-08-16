@@ -49,25 +49,20 @@ The Darwin hostname must match `networking.hostName` in `darwin/configuration.ni
 ## Architecture
 
 ```
-flake.nix                 inputs, outputs, host wiring
-darwin/configuration.nix  nix-darwin: users, Homebrew, shells
-home-manager/home.nix     shared user env (packages, git, shells)
-home-manager/linux.nix    Linux-only (genericLinux, ssh-agent)
-overlays/                 custom pkgs, pin overrides, pkgs.stablePkgs
-pkgs/                     packages added via the additions overlay
-modules/                  exported HM/darwin modules (thin today)
+flake.nix                   inputs, outputs, host wiring
+darwin/configuration.nix    nix-darwin: users, Homebrew, shells, Touch ID
+home-manager/home.nix       shared user env (packages, git, shells)
+home-manager/darwin.nix     Darwin-only (Ghostty, brew shellenv)
+home-manager/linux.nix      Linux-only (genericLinux, ssh-agent, herdr)
+modules/home-manager/       optional HM features (herdr-on-SSH)
 ```
 
-**Two nixpkgs pins.** Unstable is the default. 25.11 is `pkgs.stablePkgs` via the `stable-packages` overlay. home-manager and nix-darwin both follow unstable.
+**One nixpkgs pin.** Unstable. home-manager and nix-darwin both follow it.
 
-**Darwin** is one `darwinSystem` named `Daniels-MacBook-Pro`. home-manager is a nix-darwin module (`useGlobalPkgs`, `useUserPackages`), so one `make switch` applies system and user config.
+**Darwin** is one `darwinSystem` named `Daniels-MacBook-Pro`. home-manager is a nix-darwin module (`useGlobalPkgs`, `useUserPackages`), so one `make switch` applies system and user config. Homebrew `onActivation.cleanup = "uninstall"` makes the cask/brew lists authoritative.
 
-**Linux** is a standalone home-manager config (`tp` / `daniel@tp`). No NixOS host is wired in `flake.nix` yet. `nixos/` is a leftover template.
+**Linux** is a standalone home-manager config (`tp` / `daniel@tp`). `make check` evaluates it on Darwin so shared `home.nix` breaks show up before you switch on the ThinkPad.
 
-**Overlays** are applied on both sides:
+**Feature modules** live under `modules/home-manager` and are imported by `home.nix`, not exported from the flake. `my.herdr.autoExecOnSsh` is on for Linux only.
 
-- `additions` imports `./pkgs`
-- `modifications` is empty, ready for overrides
-- `stable-packages` exposes `pkgs.stablePkgs`
-
-Most CLI tools live in project flakes, so `home.packages` stays short. GUI apps on the Mac come from Homebrew casks.
+Most CLI tools live in project flakes, so `home.packages` stays short. GUI apps on the Mac come from Homebrew casks. Fish plugins (bobthefish, fzf, foreign-env) come from `pkgs.fishPlugins`.
