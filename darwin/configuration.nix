@@ -55,6 +55,7 @@
       # using the raycast beta currently, will switch back
       # once the beta transitions over to stable
       # "raycast"
+      "orbstack"
       "rectangle"
       "screenflow"
       "shottr"
