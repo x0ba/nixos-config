@@ -40,7 +40,13 @@
       forAllSystems = nixpkgs-unstable.lib.genAttrs systems;
     in
     {
-      packages = forAllSystems (system: import ./pkgs nixpkgs-unstable.legacyPackages.${system});
+      packages = forAllSystems (
+        system:
+        (import ./pkgs nixpkgs-unstable.legacyPackages.${system})
+        // {
+          home-manager = home-manager.packages.${system}.default;
+        }
+      );
       formatter = forAllSystems (system: nixpkgs-unstable.legacyPackages.${system}.nixfmt-tree);
 
       devShells = forAllSystems (
@@ -63,17 +69,6 @@
       darwinModules = import ./modules/darwin;
       homeManagerModules = import ./modules/home-manager;
 
-      # nixos-rebuild --flake .#your-hostname
-      nixosConfigurations = {
-        # FIXME: replace with your hostname
-        your-hostname = nixpkgs-unstable.lib.nixosSystem {
-          specialArgs = { inherit inputs; };
-          modules = [
-            ./nixos/configuration.nix
-          ];
-        };
-      };
-
       # darwin-rebuild switch --flake .#Daniels-MacBook-Pro
       darwinConfigurations = {
         Daniels-MacBook-Pro = nix-darwin.lib.darwinSystem {
@@ -92,17 +87,28 @@
         };
       };
 
-      # home-manager --flake .#your-username@your-hostname
-      homeConfigurations = {
-        # FIXME: replace with your username@hostname
-        "your-username@your-hostname" = home-manager.lib.homeManagerConfiguration {
-          # FIXME: replace x86_64-linux with your architecture
-          pkgs = nixpkgs-unstable.legacyPackages.x86_64-linux;
-          extraSpecialArgs = { inherit inputs; };
-          modules = [
-            ./home-manager/home.nix
-          ];
+      #   home-manager switch --flake .#daniel@tp
+      homeConfigurations =
+        let
+          mkPkgs =
+            system:
+            import nixpkgs-unstable {
+              inherit system;
+              config.allowUnfree = true;
+              overlays = builtins.attrValues (import ./overlays { inherit inputs; });
+            };
+          tp = home-manager.lib.homeManagerConfiguration {
+            pkgs = mkPkgs "x86_64-linux";
+            extraSpecialArgs = { inherit inputs; };
+            modules = [
+              ./home-manager/home.nix
+              ./home-manager/omarchy.nix
+            ];
+          };
+        in
+        {
+          inherit tp;
+          "daniel@tp" = tp;
         };
-      };
     };
 }

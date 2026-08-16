@@ -7,8 +7,7 @@
 }:
 let
 
-  isDarwin = pkgs.stdenv.isDarwin;
-  isLinux = pkgs.stdenv.isLinux;
+  isDarwin = pkgs.stdenv.hostPlatform.isDarwin;
   shellAliases = {
     ga = "git add";
     gc = "git commit";
@@ -25,6 +24,14 @@ let
     jn = "jj new";
     jp = "jj git push";
     js = "jj st";
+
+    cat = "bat";
+    find = "fd";
+    grep = "rg";
+    du = "dust";
+    df = "duf";
+    ps = "procs";
+    tree = "eza --tree";
   };
 in
 {
@@ -33,36 +40,65 @@ in
 
   home = {
     username = "daniel";
-    homeDirectory = if pkgs.stdenv.isDarwin then "/Users/daniel" else "/home/daniel";
+    homeDirectory = if isDarwin then "/Users/daniel" else "/home/daniel";
 
     sessionPath = [
       "${config.home.homeDirectory}/.local/bin"
     ];
 
+    sessionVariables = {
+      EDITOR = "nvim";
+    };
+
     # Most packages come from per-project flakes, so this list stays small.
-    packages = [
-      pkgs._1password-cli
-      pkgs.bat
-      pkgs.chezmoi
-      pkgs.eza
-      pkgs.fd
-      pkgs.fzf
-      pkgs.gh
-      pkgs.htop
-      pkgs.jq
-      pkgs.ripgrep
-      pkgs.tree
+    packages = with pkgs; [
+      _1password-cli
+      dust
+      duf
+      fzf
+      gh
+      htop
+      jq
+      neovim
+      procs
+      herdr
+      hunk
 
-      pkgs.nodejs
-      pkgs.pnpm
-      pkgs.bun
-
-      pkgs.codex
-      pkgs.opencode
+      codex
+      opencode
     ];
   };
 
   programs.home-manager.enable = true;
+
+  programs.bat.enable = true;
+
+  programs.eza = {
+    enable = true;
+    git = true;
+    icons = "auto";
+    extraOptions = [ "--group-directories-first" ];
+    enableNushellIntegration = true;
+  };
+
+  programs.fd.enable = true;
+
+  programs.ripgrep.enable = true;
+
+  # --cmd cd makes `cd` use zoxide's smart jump
+  programs.zoxide = {
+    enable = true;
+    options = [
+      "--cmd"
+      "cd"
+    ];
+  };
+
+  programs.delta = {
+    enable = true;
+    enableGitIntegration = true;
+    enableJujutsuIntegration = true;
+  };
 
   programs.git = {
     enable = true;
@@ -74,16 +110,29 @@ in
     };
   };
 
-  programs.jujutsu.enable = true;
+  programs.jujutsu = {
+    enable = true;
+    settings = {
+      user = {
+        name = config.programs.git.settings.user.name;
+        email = config.programs.git.settings.user.email;
+      };
+      ui.default-command = "status";
+    };
+  };
 
-  programs.direnv.enable = true;
+  programs.direnv = {
+    enable = true;
+    nix-direnv.enable = true;
+  };
 
   programs.ghostty = {
     enable = true;
-    # Homebrew cask owns the app; this module only writes config + shell hooks.
+    # OS package owns the app (Homebrew on Darwin, Omarchy/pacman on Linux).
     package = null;
+    systemd.enable = false;
     enableFishIntegration = true;
-    enableZshIntegration = false;
+    enableZshIntegration = true;
     enableBashIntegration = false;
     settings = {
       # cursor, sudo, title, ssh-env, ssh-terminfo, path
@@ -124,16 +173,17 @@ in
         eval "$(/opt/homebrew/bin/brew shellenv zsh)"
       fi
     '';
-    initContent = ''
-      if [[ -n "$GHOSTTY_RESOURCES_DIR" ]]; then
-        source "$GHOSTTY_RESOURCES_DIR/shell-integration/zsh/ghostty-integration"
-      fi
-    '';
   };
 
   programs.fish = {
     enable = true;
     shellAliases = shellAliases;
+    functions.fish_greeting = "";
+    shellInit = lib.optionalString isDarwin ''
+      if test -d /opt/homebrew
+        eval (/opt/homebrew/bin/brew shellenv fish)
+      end
+    '';
     interactiveShellInit = lib.strings.concatStrings (
       lib.strings.intersperse "\n" ([
         "source ${inputs.theme-bobthefish}/functions/fish_prompt.fish"
@@ -161,6 +211,8 @@ in
 
   programs.nushell = {
     enable = true;
+    shellAliases = shellAliases;
+    settings.show_banner = false;
   };
 
   home.stateVersion = "25.11";
