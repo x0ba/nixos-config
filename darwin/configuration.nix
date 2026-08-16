@@ -27,7 +27,6 @@
 
   networking.hostName = "Daniels-MacBook-Pro";
 
-  # Options that used to apply to whoever ran darwin-rebuild now apply here.
   system.primaryUser = "daniel";
 
   # nix-darwin only writes UserShell for users listed here.
@@ -43,6 +42,7 @@
     enable = true;
     casks = [
       "1password"
+      "balenaetcher"
       "cursor"
       "discord"
       "fantastical"
@@ -80,7 +80,5 @@
 
   system.configurationRevision = inputs.self.rev or inputs.self.dirtyRev or null;
 
-  # Used for backwards compatibility, please read the changelog before changing.
-  # $ darwin-rebuild changelog
   system.stateVersion = 6;
 }

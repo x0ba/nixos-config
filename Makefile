@@ -1,6 +1,5 @@
-# Darwin uses the machine name (darwinConfigurations.<host>).
-# Omarchy uses the standalone Home Manager attr (homeConfigurations.tp).
-# Override: make switch HOST=tp
+# Darwin: LocalHostName → darwinConfigurations.<host>
+# Linux: homeConfigurations.tp
 UNAME := $(shell uname)
 ifeq ($(UNAME),Darwin)
 HOST ?= $(shell scutil --get LocalHostName 2>/dev/null || hostname -s)

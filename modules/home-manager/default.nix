@@ -1,4 +1,4 @@
 {
   default = ../../home-manager/home.nix;
-  omarchy = ../../home-manager/omarchy.nix;
+  linux = ../../home-manager/linux.nix;
 }

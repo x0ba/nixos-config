@@ -26,7 +26,6 @@ set -g fish_pager_color_description B3A06D yellow
 set -g fish_pager_color_prefix white --bold --underline
 set -g fish_pager_color_progress brwhite --background=cyan
 
-# Concise nix-shell indicator for bobthefish.
 function __bobthefish_prompt_nix -S -d 'Display current nix environment'
     [ "$theme_display_nix" = 'no' -o -z "$IN_NIX_SHELL" ]
     and return
@@ -41,5 +40,4 @@ if isatty
     set -x GPG_TTY (tty)
 end
 
-# e.g. `fnix -p go` for a nix-shell that still uses fish
 alias fnix "nix-shell --run fish"

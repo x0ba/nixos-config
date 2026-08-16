@@ -85,7 +85,7 @@ in
 
   programs.ripgrep.enable = true;
 
-  # --cmd cd makes `cd` use zoxide's smart jump
+  # --cmd cd makes `cd` use zoxide's smart jump.
   programs.zoxide = {
     enable = true;
     options = [
@@ -126,16 +126,15 @@ in
     nix-direnv.enable = true;
   };
 
-  programs.ghostty = {
+  programs.ghostty = lib.mkIf isDarwin {
     enable = true;
-    # OS package owns the app (Homebrew on Darwin, Omarchy/pacman on Linux).
+    # Homebrew cask owns the app; this module only writes config + shell hooks.
     package = null;
     systemd.enable = false;
     enableFishIntegration = true;
     enableZshIntegration = true;
     enableBashIntegration = false;
     settings = {
-      # cursor, sudo, title, ssh-env, ssh-terminfo, path
       shell-integration-features = true;
     };
   };

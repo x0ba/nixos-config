@@ -2,7 +2,7 @@
   description = "daniel's nix config";
 
   inputs = {
-    # Default pin; stable is exposed as pkgs.stablePkgs via overlays/default.nix.
+    # Unstable is the default pkgs; 25.11 is pkgs.stablePkgs via overlays.
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
 
@@ -12,7 +12,6 @@
     nix-darwin.url = "github:nix-darwin/nix-darwin";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs-unstable";
 
-    # These repos are not flakes.
     theme-bobthefish.url = "github:oh-my-fish/theme-bobthefish/e3b4d4eafc23516e35f162686f08a42edf844e40";
     theme-bobthefish.flake = false;
     fish-fzf.url = "github:jethrokuan/fzf/24f4739fc1dffafcc0da3ccfbbd14d9c7d31827a";
@@ -69,7 +68,6 @@
       darwinModules = import ./modules/darwin;
       homeManagerModules = import ./modules/home-manager;
 
-      # darwin-rebuild switch --flake .#Daniels-MacBook-Pro
       darwinConfigurations = {
         Daniels-MacBook-Pro = nix-darwin.lib.darwinSystem {
           specialArgs = { inherit inputs; };
@@ -87,7 +85,6 @@
         };
       };
 
-      #   home-manager switch --flake .#daniel@tp
       homeConfigurations =
         let
           mkPkgs =
@@ -102,7 +99,7 @@
             extraSpecialArgs = { inherit inputs; };
             modules = [
               ./home-manager/home.nix
-              ./home-manager/omarchy.nix
+              ./home-manager/linux.nix
             ];
           };
         in
