@@ -38,10 +38,16 @@
           pkgs = nixpkgs-unstable.legacyPackages.${system};
         in
         {
-          # Forces eval of the Linux host so Darwin `nix flake check` catches home.nix breaks.
+          # Cross-eval both hosts so `nix flake check` on either machine
+          # catches home.nix and Darwin-module breaks.
           home-tp = pkgs.runCommand "check-home-tp" { } ''
             mkdir -p $out
             echo ${self.homeConfigurations.tp.config.home.username} > $out/ok
+          '';
+          darwin-mbp = pkgs.runCommand "check-darwin-mbp" { } ''
+            mkdir -p $out
+            echo ${self.darwinConfigurations.Daniels-MacBook-Pro.config.networking.hostName} > $out/ok
+            echo ${self.darwinConfigurations.Daniels-MacBook-Pro.config.home-manager.users.daniel.home.username} >> $out/ok
           '';
         }
       );
@@ -57,8 +63,12 @@
               nixfmt-tree
               nixfmt
               nil
-              gnumake
+              nh
             ];
+            # Working tree, not the flake's store copy — nh needs to see local edits.
+            shellHook = ''
+              export NH_FLAKE="$PWD"
+            '';
           };
         }
       );

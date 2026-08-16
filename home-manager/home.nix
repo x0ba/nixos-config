@@ -74,6 +74,11 @@ in
 
   programs.home-manager.enable = true;
 
+  programs.nh = {
+    enable = true;
+    flake = "${config.home.homeDirectory}/Code/p/nix-config";
+  };
+
   programs.bat.enable = true;
 
   programs.eza = {

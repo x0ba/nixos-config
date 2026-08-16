@@ -64,6 +64,14 @@
     ];
   };
 
+  fonts.packages = [
+    # nixpkgs rebuilds this with gftools/nanoemoji; that FOD hash is currently broken.
+    (pkgs.jetbrains-mono.overrideAttrs {
+      nativeBuildInputs = [ ];
+      dontBuild = true;
+    })
+  ];
+
   programs.fish.enable = true;
   programs.zsh.enable = true;
 
