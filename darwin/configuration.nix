@@ -61,6 +61,7 @@
       "shottr"
       "slack"
       "spotify"
+      "tailscale-app"
       "wispr-flow"
 
     ];

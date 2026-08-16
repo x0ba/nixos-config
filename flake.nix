@@ -55,9 +55,10 @@
         in
         {
           default = pkgs.mkShellNoCC {
-            packages = [
-              pkgs.nixfmt-tree
-              pkgs.nil
+            packages = with pkgs; [
+              nixfmt-tree
+              nil
+              gnumake
             ];
           };
         }
