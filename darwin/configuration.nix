@@ -40,6 +40,7 @@
       "fuse-t"
       "ghostty"
       "google-chrome"
+      "granola"
       "grok-bot"
       "imageoptim"
       "istat-menus"
