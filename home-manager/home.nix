@@ -59,7 +59,6 @@ in
       jq
       neovim
       procs
-      herdr
       hunk
 
       codex
@@ -67,11 +66,6 @@ in
 
       restic
     ];
-
-    file.".config/herdr/config.toml".text = ''
-      [keys]
-      prefix = "ctrl+a"
-    '';
   };
 
   programs.home-manager.enable = true;
@@ -208,6 +202,16 @@ in
   };
 
   programs.atuin.enable = true;
+
+  programs.herdr = {
+    enable = true;
+    settings = {
+      keys = {
+        prefix = "ctrl+a";
+      };
+      theme.name = "one-dark";
+    };
+  };
 
   programs.nushell = {
     enable = true;
