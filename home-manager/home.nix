@@ -64,6 +64,8 @@ in
 
       codex
       opencode
+
+      restic
     ];
 
     file.".config/herdr/config.toml".text = ''
