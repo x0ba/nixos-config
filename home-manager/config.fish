@@ -33,7 +33,7 @@ set -g fish_pager_color_progress brwhite --background=cyan
 functions fish_prompt >/dev/null
 function __bobthefish_git_branch -S -d 'Get the current jj change or git branch'
     set -l jj_state (command jj log --ignore-working-copy --no-graph -r @ \
-        -T 'change_id.shortest(8) ++ "\t" ++ bookmarks.map(|b| b.name()).join(",") ++ "\t" ++ description.first_line() ++ "\t" ++ if(empty, "empty", "dirty") ++ "\t" ++ if(conflict, "conflict", "") ++ "\n"' \
+        -T 'change_id.shortest(8) ++ "\t" ++ bookmarks.map(|b| b.name()).join(",") ++ "\t" ++ if(empty, "empty", "dirty") ++ "\t" ++ if(conflict, "conflict", "") ++ "\n"' \
         2>/dev/null)
 
     if test -n "$jj_state"
@@ -41,13 +41,11 @@ function __bobthefish_git_branch -S -d 'Get the current jj change or git branch'
         set -l label $fields[2]
         test -n "$label"; or set label $fields[1]
 
-        set -l summary (string shorten --max 32 -- $fields[3])
         set -l state
-        test "$fields[4]" = empty; and set state "$state∅"
-        test "$fields[5]" = conflict; and set state "$state!"
+        test "$fields[3]" = empty; and set state "$state∅"
+        test "$fields[4]" = conflict; and set state "$state!"
 
         echo -n "jj $label"
-        test -n "$summary"; and echo -n " $summary"
         test -n "$state"; and echo -n " $state"
         return
     end
