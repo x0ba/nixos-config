@@ -69,4 +69,4 @@ modules/home-manager/       optional HM features (herdr-on-SSH)
 
 **Feature modules** live under `modules/home-manager` and are imported by `home.nix`, not exported from the flake. `my.herdr.autoExecOnSsh` is on for Linux only.
 
-Most CLI tools live in project flakes, so `home.packages` stays short. GUI apps on the Mac come from Homebrew casks. Fish plugins (bobthefish, fzf, foreign-env) come from `pkgs.fishPlugins`.
+Most CLI tools live in project flakes, so `home.packages` stays short. GUI apps on the Mac come from Homebrew casks. Fish plugins (fzf and foreign-env) come from `pkgs.fishPlugins`.

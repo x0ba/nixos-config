@@ -194,10 +194,6 @@ in
         name = "foreign-env";
         src = foreign-env.src;
       }
-      {
-        name = "bobthefish";
-        src = bobthefish.src;
-      }
     ];
   };
 

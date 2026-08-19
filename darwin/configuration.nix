@@ -42,6 +42,7 @@
     onActivation.cleanup = "uninstall";
     casks = [
       "1password"
+      "adobe-creative-cloud"
       "balenaetcher"
       "cursor"
       "discord"
