@@ -24,6 +24,8 @@
     dock = {
       autohide = true;
       autohide-delay = 0.0;
+      magnification = true;
+      largesize = 100;
       show-recents = false;
     };
   };
