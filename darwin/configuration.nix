@@ -38,6 +38,7 @@
       "discord"
       "notion"
       "notion-calendar"
+      "ollama-app"
       "fuse-t"
       "ghostty"
       "google-chrome"
