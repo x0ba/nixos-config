@@ -19,6 +19,15 @@
 
   system.primaryUser = "daniel";
 
+  system.defaults = {
+    NSGlobalDomain.AppleInterfaceStyleSwitchesAutomatically = true;
+    dock = {
+      autohide = true;
+      autohide-delay = 0.0;
+      show-recents = false;
+    };
+  };
+
   # nix-darwin only writes UserShell for users listed here.
   users.knownUsers = [ "daniel" ];
   users.users.daniel = {
@@ -47,6 +56,8 @@
       "imageoptim"
       "istat-menus"
       "karabiner-elements"
+      "intellij-idea"
+      "datagrip"
       # using the raycast beta currently, will switch back
       # once the beta transitions over to stable
       # "raycast"
