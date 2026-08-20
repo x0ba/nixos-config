@@ -178,6 +178,11 @@ in
   programs.fish = {
     enable = true;
     shellAliases = shellAliases;
+    # Replaces fish 4.1+'s built-in, which only prints a conflict marker.
+    functions.fish_jj_prompt = {
+      description = "Print jj bookmark and working-copy status";
+      body = builtins.readFile ./fish_jj_prompt.fish;
+    };
     interactiveShellInit = ''
       ${builtins.readFile ./config.fish}
       set -g SHELL ${pkgs.fish}/bin/fish
