@@ -17,6 +17,7 @@
     enableBashIntegration = false;
     settings = {
       shell-integration-features = true;
+      theme = "vesper";
     };
   };
 

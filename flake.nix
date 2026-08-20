@@ -9,6 +9,11 @@
 
     nix-darwin.url = "github:nix-darwin/nix-darwin";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs-unstable";
+
+    herdr-jj-status = {
+      url = "github:mroth/herdr-jj-status";
+      flake = false;
+    };
   };
 
   outputs =

@@ -1,5 +1,21 @@
 {
   "nodes": {
+    "herdr-jj-status": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1785204317,
+        "narHash": "sha256-oKq7ch+dklo8YFGM3r2soV94KoMJU/sGnZvEeT2SZB8=",
+        "owner": "mroth",
+        "repo": "herdr-jj-status",
+        "rev": "40588ef743e1dd6a252b2e39765616584fd2e39e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "mroth",
+        "repo": "herdr-jj-status",
+        "type": "github"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -58,6 +74,7 @@
     },
     "root": {
       "inputs": {
+        "herdr-jj-status": "herdr-jj-status",
         "home-manager": "home-manager",
         "nix-darwin": "nix-darwin",
         "nixpkgs-unstable": "nixpkgs-unstable"

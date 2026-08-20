@@ -63,8 +63,7 @@ in
 
       codex
       opencode
-
-      restic
+      cursor-cli
     ];
   };
 
@@ -179,7 +178,6 @@ in
   programs.fish = {
     enable = true;
     shellAliases = shellAliases;
-    functions.fish_greeting = "";
     interactiveShellInit = ''
       ${builtins.readFile ./config.fish}
       set -g SHELL ${pkgs.fish}/bin/fish
@@ -202,10 +200,25 @@ in
   programs.herdr = {
     enable = true;
     settings = {
+      theme.name = "vesper";
       keys = {
         prefix = "ctrl+a";
       };
-      theme.name = "one-dark";
+      # $jj_* tokens come from mroth/herdr-jj-status; empty on plain-git spaces.
+      ui.sidebar.spaces.rows = [
+        [
+          "state_icon"
+          "workspace"
+        ]
+        [
+          "branch"
+          "git_status"
+        ]
+        [
+          "$jj_bookmark"
+          "$jj_status"
+        ]
+      ];
     };
   };
 

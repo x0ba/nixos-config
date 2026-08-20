@@ -23,7 +23,6 @@
     NSGlobalDomain.AppleInterfaceStyleSwitchesAutomatically = true;
     dock = {
       autohide = true;
-      autohide-delay = 0.0;
       show-recents = false;
     };
   };
