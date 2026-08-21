@@ -73,12 +73,15 @@
     ];
   };
 
-  fonts.packages = [
+  fonts.packages = with pkgs; [
     # nixpkgs rebuilds this with gftools/nanoemoji; that FOD hash is currently broken.
-    (pkgs.jetbrains-mono.overrideAttrs {
+    (jetbrains-mono.overrideAttrs {
       nativeBuildInputs = [ ];
       dontBuild = true;
     })
+    geist-font
+    atkinson-hyperlegible
+    fira-code
   ];
 
   programs.fish.enable = true;
