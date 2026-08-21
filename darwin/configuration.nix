@@ -74,11 +74,6 @@
   };
 
   fonts.packages = with pkgs; [
-    # nixpkgs rebuilds this with gftools/nanoemoji; that FOD hash is currently broken.
-    (jetbrains-mono.overrideAttrs {
-      nativeBuildInputs = [ ];
-      dontBuild = true;
-    })
     geist-font
     atkinson-hyperlegible
     fira-code

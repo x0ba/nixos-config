@@ -63,7 +63,12 @@ in
 
       codex
       opencode
-      cursor-cli
+      # nixpkgs only links cursor-agent; Cursor's CLI is documented as `agent`.
+      (cursor-cli.overrideAttrs (old: {
+        postInstall = (old.postInstall or "") + ''
+          ln -s cursor-agent $out/bin/agent
+        '';
+      }))
     ];
   };
 
